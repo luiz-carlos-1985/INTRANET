@@ -1,24 +1,22 @@
-/* Basic */
-
-	// MSIE: Requerido para IEMobile.
+	// MSIE: Requerido para o IEMobile.
 		@-ms-viewport {
 			width: device-width;
 		}
 
-	// MSIE: Prevents scrollbar from overlapping content.
+	// MSIE: Previne a barra de rolagem de se sobrepor ao conteúdo. 
 		body {
 			-ms-overflow-style: scrollbar;
 		}
 
-	// Ensures page width is always >=320px.
+	// Assegura que a largura da página ficará sempre em 320 pixels.
 		@include breakpoint('<=xsmall') {
 			html, body {
 				min-width: 320px;
 			}
 		}
 
-	// Set box model to border-box.
-	// Based on css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
+	// Seta o modelo da caixa para border-box.
+	// Baseado no documento: css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
 		html {
 			box-sizing: border-box;
 		}
@@ -30,7 +28,7 @@
 	body {
 		background: _palette(bg);
 
-		// Stops initial animations until page loads or stops resizing.
+		// Para as animações iniciais até que a página carregue ou pare de mudar de tamanho.
 			&.is-preload,
 			&.is-resizing {
 				*, *:before, *:after {
