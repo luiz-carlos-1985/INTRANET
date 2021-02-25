@@ -1,7 +1,5 @@
 
-// Vars.
-
-	/// Vendor prefixes.
+	/// Prefixos do vendor .
 	/// @var {list}
 	$vendor-prefixes: (
 		'-moz-',
@@ -10,9 +8,9 @@
 		''
 	);
 
-	/// Properties that should be vendorized.
-	/// Data via caniuse.com, github.com/postcss/autoprefixer, and developer.mozilla.org
-	/// @var {list}
+	/// Propriedades que devem ser vendorizadas.
+/// Dados via caniuse.com, github.com/postcss/autoprefixer e developer.mozilla.org
+/// @var {list}
 	$vendor-properties: (
 
 		// Animation.
@@ -191,8 +189,8 @@
 
 	);
 
-	/// Values that should be vendorized.
-	/// Data via caniuse.com, github.com/postcss/autoprefixer, and developer.mozilla.org
+	/// Propriedades que devem ser vendorizadas.
+	/// Dados via caniuse.com, github.com/postcss/autoprefixer e developer.mozilla.org
 	/// @var {list}
 	$vendor-values: (
 
@@ -246,13 +244,13 @@
 
 	);
 
-// Functions.
+// Funções.
 
-	/// Removes a specific item from a list.
-	/// @author Hugo Giraudel
-	/// @param {list} $list List.
-	/// @param {integer} $index Index.
-	/// @return {list} Updated list.
+/// Remove um item específico de uma lista.
+/// @param {list} Lista $ list.
+/// @param {integer} Índice $ index.
+/// @return {list} Lista atualizada.
+
 	@function remove-nth($list, $index) {
 
 		$result: null;
@@ -285,12 +283,11 @@
 
 	}
 
-	/// Replaces a substring within another string.
-	/// @author Hugo Giraudel
-	/// @param {string} $string String.
-	/// @param {string} $search Substring.
-	/// @param {string} $replace Replacement.
-	/// @return {string} Updated string.
+/// Substitui uma substring em outra string.
+/// @param {string} $ string String.
+/// @param {string} $ search Substring.
+/// @param {string} $ replace Substituição.
+/// @return {string} String atualizada.
 	@function str-replace($string, $search, $replace: '') {
 
 		$index: str-index($string, $search);
@@ -303,11 +300,11 @@
 
 	}
 
-	/// Replaces a substring within each string in a list.
-	/// @param {list} $strings List of strings.
-	/// @param {string} $search Substring.
-	/// @param {string} $replace Replacement.
-	/// @return {list} Updated list of strings.
+	/// Substitui uma substring dentro de cada string em uma lista.
+	/// @param {list} $ strings Lista de strings.
+/// @param {string} $ search Substring.
+/// @param {string} $ replace Substituição.
+/// @return {list} Lista atualizada de strings.
 	@function str-replace-all($strings, $search, $replace: '') {
 
 		@each $string in $strings {
@@ -320,8 +317,8 @@
 
 // Mixins.
 
-	/// Wraps @content in vendorized keyframe blocks.
-	/// @param {string} $name Name.
+/// Envolve @content em blocos do key-frame vendidos por fornecedores.
+/// @param {string} $ name Nome.
 	@mixin keyframes($name) {
 
 		@-moz-keyframes #{$name} { @content; }
@@ -331,15 +328,15 @@
 
 	}
 
-	/// Vendorizes a declaration's property and/or value(s).
-	/// @param {string} $property Property.
-	/// @param {mixed} $value String/list of value(s).
+	/// Vendoriza a propriedade e / ou valor (es) de uma declaração.
+	/// @param {string} $ property Propriedade.
+	/// @param {mixed} $ value String / lista de valor (es).
 	@mixin vendor($property, $value) {
 
-		// Determine if property should expand.
+		// Determina se a propriedade deverá se expandir 
 			$expandProperty: index($vendor-properties, $property);
 
-		// Determine if value should expand (and if so, add '-prefix-' placeholder).
+		// Determine se o valor deve se expandir (e, em caso afirmativo, adicione o espaço reservado '-prefix-').
 			$expandValue: false;
 
 			@each $x in $value {
@@ -353,21 +350,21 @@
 				}
 			}
 
-		// Expand property?
+		// Expandir propriedade?
 			@if $expandProperty {
 			    @each $vendor in $vendor-prefixes {
 			        #{$vendor}#{$property}: #{str-replace-all($value, '-prefix-', $vendor)};
 			    }
 			}
 
-		// Expand just the value?
+		// Expandir apenas o valor?
 			@elseif $expandValue {
 			    @each $vendor in $vendor-prefixes {
 			        #{$property}: #{str-replace-all($value, '-prefix-', $vendor)};
 			    }
 			}
 
-		// Neither? Treat them as a normal declaration.
+		// Nenhum? Trate-os como uma declaração normal.
 			@else {
 		        #{$property}: #{$value};
 			}
