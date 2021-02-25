@@ -1,7 +1,7 @@
 
 	/// Inicializa o elemento corrente como um HTML grid.
 	/// @param {mixed} $ gutters Gutters (um único número para definir os Gutters de coluna / linha ou uma lista para defini-las individualmente).
-/// @param {mixed} $ sufixo Sufixo da classe da coluna (opcional; um único sufixo ou uma lista).
+        /// @param {mixed} $ sufixo Sufixo da classe da coluna (opcional; um único sufixo ou uma lista).
 	@mixin html-grid($gutters: 1.5em, $suffix: '') {
 
 		// Inicializar.
