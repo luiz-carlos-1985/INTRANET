@@ -3,13 +3,13 @@
 		z-index-base:		10000
 	);
 
-// Duration.
+// Duração.
 	$duration: (
 		nav:				0.5s,
 		transition:			0.2s
 	);
 
-// Size.
+// Tamanho.
 	$size: (
 		border-radius:		0.375em,
 		element-height:		2.75em,
@@ -19,7 +19,7 @@
 		gutter:				3em
 	);
 
-// Font.
+// Fonte.
 	$font: (
 		family:				('Open Sans', sans-serif),
 		family-heading:		('Roboto Slab', serif),
@@ -31,7 +31,7 @@
 		kerning-heading:	0.075em
 	);
 
-// Palette.
+// Paleta.
 	$palette: (
 		bg:					#ffffff,
 		bg-alt:				#f5f6f7,
