@@ -1,16 +1,15 @@
-// Mixins.
 
-	/// Initializes the current element as an HTML grid.
-	/// @param {mixed} $gutters Gutters (either a single number to set both column/row gutters, or a list to set them individually).
-	/// @param {mixed} $suffix Column class suffix (optional; either a single suffix or a list).
+	/// Inicializa o elemento corrente como um HTML grid.
+	/// @param {mixed} $ gutters Gutters (um único número para definir os Gutters de coluna / linha ou uma lista para defini-las individualmente).
+/// @param {mixed} $ sufixo Sufixo da classe da coluna (opcional; um único sufixo ou uma lista).
 	@mixin html-grid($gutters: 1.5em, $suffix: '') {
 
-		// Initialize.
+		// Inicializar.
 			$cols: 12;
 			$multipliers: 0, 0.25, 0.5, 1, 1.50, 2.00;
 			$unit: 100% / $cols;
 
-			// Suffixes.
+			// Sufixos.
 				$suffixes: null;
 
 				@if (type-of($suffix) == 'list') {
@@ -37,13 +36,13 @@
 
 				}
 
-		// Row.
+		// Linhas.
 			display: flex;
 			flex-wrap: wrap;
 			box-sizing: border-box;
 			align-items: stretch;
 
-			// Columns.
+			// Colunas.
 				> * {
 					box-sizing: border-box;
 				}
@@ -57,7 +56,7 @@
 					}
 				}
 
-			// Alignment.
+			// Alinhamento.
 				&.aln-left {
 					justify-content: flex-start;
 				}
@@ -82,10 +81,10 @@
 					align-items: flex-end;
 				}
 
-		// Step through suffixes.
+		// Passo através dos sufixos.
 			@each $suffix in $suffixes {
 
-				// Suffix.
+				// Sufixo.
 					@if ($suffix != '') {
 						$suffix: '-' + $suffix;
 					}
@@ -93,14 +92,14 @@
 						$suffix: '';
 					}
 
-				// Row.
+				// Linhas.
 
 					// Important.
 						> .imp#{$suffix} {
 							order: -1;
 						}
 
-					// Columns, offsets.
+					// Colunas, fora de alinhamento.
 						@for $i from 1 through $cols {
 							> .col-#{$i}#{$suffix} {
 								width: $unit * $i;
@@ -111,7 +110,7 @@
 							}
 						}
 
-					// Step through multipliers.
+					// Passo através dos multiplicadores .
 						@each $multiplier in $multipliers {
 
 							// Gutters.
