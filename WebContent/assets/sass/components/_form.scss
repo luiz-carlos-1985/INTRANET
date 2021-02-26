@@ -1,5 +1,3 @@
-
-
 	form {
 		margin: 0 0 _size(element-margin) 0;
 	}
@@ -82,7 +80,7 @@
 	}
 
 	input[type="checkbox"],
-	input[type="radio"], {
+	input[type="radio"] {
 		@include vendor('appearance', 'none');
 		display: block;
 		float: left;
@@ -90,6 +88,7 @@
 		opacity: 0;
 		width: 1em;
 		z-index: -1;
+		}
 
 		& + label {
 			@include icon(false, solid);
@@ -101,6 +100,7 @@
 			padding-left: (_size(element-height) * 0.6) + 0.75em;
 			padding-right: 0.75em;
 			position: relative;
+			}
 
 			&:before {
 				background: _palette(bg);
@@ -117,7 +117,7 @@
 				top: 0;
 				width: (_size(element-height) * 0.75);
 			}
-		}
+		
 
 		&:checked + label {
 			&:before {
@@ -134,7 +134,7 @@
 				box-shadow: 0 0 0 1px _palette(accent);
 			}
 		}
-	}
+	
 
 	input[type="checkbox"] {
 		& + label {
