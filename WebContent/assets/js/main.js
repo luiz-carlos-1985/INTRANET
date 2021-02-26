@@ -1,290 +1,640 @@
 (function($) {
 
-	var	$window = $(window),
-		$head = $('head'),
-		$body = $('body');
 
-	// Breakpoints.
-	
-		breakpoints({
-			xlarge:   [ '1281px',  '1680px' ],
-			large:    [ '981px',   '1280px' ],
-			medium:   [ '737px',   '980px'  ],
-			small:    [ '481px',   '736px'  ],
-			xsmall:   [ '361px',   '480px'  ],
-			xxsmall:  [ null,      '360px'  ],
-			'xlarge-to-max':    '(min-width: 1681px)',
-			'small-to-xlarge':  '(min-width: 481px) and (max-width: 1680px)'
+	$.fn.navList = function() {
+
+		var	$this = $(this);
+			$a = $this.find('a'),
+			b = [];
+
+		$a.each(function() {
+
+			var	$this = $(this),
+				indent = Math.max(0, $this.parents('li').length - 1),
+				href = $this.attr('href'),
+				target = $this.attr('target');
+
+			b.push(
+				'<a ' +
+					'class="link depth-' + indent + '"' +
+					( (typeof target !== 'undefined' && target != '') ? ' target="' + target + '"' : '') +
+					( (typeof href !== 'undefined' && href != '') ? ' href="' + href + '"' : '') +
+				'>' +
+					'<span class="indent-' + indent + '"></span>' +
+					$this.text() +
+				'</a>'
+			);
+
 		});
 
-	// Para animações / transições até que a página tenha ... carregado.
+		return b.join('');
 
-			$window.on('load', function() {
-				window.setTimeout(function() {
-					$body.removeClass('is-preload');
-				}, 100);
-			});
+	};
 
-		// ... parou de redimensionar.
+/**
+* "Painelar" um elemento.
+* @param {object} userConfig - Configuração do usuário.
+* @return {jQuery} - objeto jQuery.
+* /
+	 
+	$.fn.panel = function(userConfig) {
+
+		// Sem elementos?
 		
-			var resizeTimeout;
+			if (this.length == 0)
+				return $this;
 
-			$window.on('resize', function() {
+		// Multiplos elementos?
+		
+			if (this.length > 1) {
 
-			// Marcar como redimensionamento.
-			
-					$body.addClass('is-resizing');
+				for (var i=0; i < this.length; i++)
+					$(this[i]).panel(userConfig);
 
-				// Desmarcar após atraso.
+				return $this;
+
+			}
+
+		// Vars.
+		
+			var	$this = $(this),
+				$body = $('body'),
+				$window = $(window),
+				id = $this.attr('id'),
+				config;
+
+		// Config.
+		
+			config = $.extend({
+
+				// Delay.
 				
-					clearTimeout(resizeTimeout);
+					delay: 0,
 
-					resizeTimeout = setTimeout(function() {
-						$body.removeClass('is-resizing');
-					}, 100);
-
-			});
-
-	// Consertos.
-// O objeto se adequa a imagem.
-
-			if (!browser.canUse('object-fit')
-			||	browser.name == 'safari')
-				$('.image.object').each(function() {
-
-					var $this = $(this),
-						$img = $this.children('img');
-
-					// Esconde imagem original
-					
-						$img.css('opacity', '0');
-
-					// Defini o fundo.
-					
-						$this
-							.css('background-image', 'url("' + $img.attr('src') + '")')
-							.css('background-size', $img.css('object-fit') ? $img.css('object-fit') : 'cover')
-							.css('background-position', $img.css('object-position') ? $img.css('object-position') : 'center');
-
-				});
-
-	// Barra lateral.
-	
-		var $sidebar = $('#sidebar'),
-			$sidebar_inner = $sidebar.children('.inner');
-
-		// Inativo por padrão em "<= large".
-		
-			breakpoints.on('<=large', function() {
-				$sidebar.addClass('inactive');
-			});
-
-			breakpoints.on('>large', function() {
-				$sidebar.removeClass('inactive');
-			});
-
-		// Solução alternativa para o bug de posição da barra de rolagem do Chrome e do Android.
-		
-			if (browser.os == 'android'
-			&&	browser.name == 'chrome')
-				$('<style>#sidebar .inner::-webkit-scrollbar { display: none; }</style>')
-					.appendTo($head);
-
-		// Toggle. (Alternancia)
-		
-			$('<a href="#sidebar" class="toggle">Toggle</a>')
-				.appendTo($sidebar)
-				.on('click', function(event) {
-
-					// Prevent default.
-					
-						event.preventDefault();
-						event.stopPropagation();
-
-					// Toggle.
-					
-						$sidebar.toggleClass('inactive');
-
-				});
-
-		// Eventos.
-
-			// click no link.
-				$sidebar.on('click', 'a', function(event) {
-
-					// Grande demais? 
-					
-						if (breakpoints.active('>large'))
-							return;
-
-					// Vars.
-					
-						var $a = $(this),
-							href = $a.attr('href'),
-							target = $a.attr('target');
-
-					// Prevent default.
-					
-						event.preventDefault();
-						event.stopPropagation();
-
-					// Checka a URL.
-					
-						if (!href || href == '#' || href == '')
-							return;
-
-					// Esconde a barra lateral.
-					
-						$sidebar.addClass('inactive');
-
-					// Redireciona para o "href".
-					
-						setTimeout(function() {
-
-							if (target == '_blank')
-								window.open(href);
-							else
-								window.location.href = href;
-
-						}, 500);
-
-				});
-
-			// Evita que certos eventos dentro do painel borbulhem.
-			
-				$sidebar.on('click touchend touchstart touchmove', function(event) {
-
-					// Grande demais?
-					
-						if (breakpoints.active('>large'))
-							return;
-
-			// Impede a propagação.
-			
-						event.stopPropagation();
-
-				});
-
-			// Ocultar painel no corpo ao clickar ou tocar no mesmo.
-			
-				$body.on('click touchend', function(event) {
-
-					//Grande Demais?
-					
-						if (breakpoints.active('>large'))
-							return;
-
-					// Desativar a barra lateral.
-					
-						$sidebar.addClass('inactive');
-
-				});
-
-	// Scroll lock.
-// Nota: Se você fizer algo para alterar a altura do conteúdo da barra lateral, certifique-se de
-// "triggar" 'resize.sidebar-lock' em $window para que as coisas não fiquem fora de sincronia.
-
-			$window.on('load.sidebar-lock', function() {
-
-				var sh, wh, st;
-
-				// Redefine a posição de rolagem para 0 se for 1.
+				// Esconder o painel ao clickar no link.
 				
-					if ($window.scrollTop() == 1)
-						$window.scrollTop(0);
+					hideOnClick: false,
 
-				$window
-					.on('scroll.sidebar-lock', function() {
+				// Esconder o painel ao teclar "Esc"
+				
+					hideOnEscape: false,
 
-						var x, y;
+				// Ocultar painel ao deslizar.
+				
+					hideOnSwipe: false,
 
-						// Grande demais?
-						
-							if (breakpoints.active('<=large')) {
+				// Redefine a posição de rolagem ao ocultar o painel.
+				
+					resetScroll: false,
 
-								$sidebar_inner
-									.data('locked', 0)
-									.css('position', '')
-									.css('top', '');
+				// Reinicia os formulários ao ocultar o painel.
+				
+					resetForms: false,
 
+				// Lado da janela de visualização, o painel aparecerá.
+				
+					side: null,
+
+				// Elemento de destino para "class".
+				
+					target: $this,
+
+				// Classe para toggle.
+				
+					visibleClass: 'visible'
+
+			}, userConfig);
+
+			// Expandir "target" se ainda não for um objeto jQuery.
+			
+				if (typeof config.target != 'jQuery')
+					config.target = $(config.target);
+
+		// Painel.
+
+			// Metodos.
+			
+				$this._hide = function(event) {
+
+					// Ainda Escondido?
+					
+						if (!config.target.hasClass(config.visibleClass))
+							return;
+
+					// Se um evento foi fornecido, cancele-o.
+					
+						if (event) {
+
+							event.preventDefault();
+							event.stopPropagation();
+
+						}
+
+					// Esconder.
+					
+						config.target.removeClass(config.visibleClass);
+
+					// Depois de ocultar.
+					
+						window.setTimeout(function() {
+
+							// Reseta a posição da rolagem.
+							
+								if (config.resetScroll)
+									$this.scrollTop(0);
+
+							// Reseta forms.
+							
+								if (config.resetForms)
+									$this.find('form').each(function() {
+										this.reset();
+									});
+
+						}, config.delay);
+
+				};
+
+			// Correções do fornecedor.
+			
+				$this
+					.css('-ms-overflow-style', '-ms-autohiding-scrollbar')
+					.css('-webkit-overflow-scrolling', 'touch');
+
+			// Esconder ao clickar.
+			
+				if (config.hideOnClick) {
+
+					$this.find('a')
+						.css('-webkit-tap-highlight-color', 'rgba(0,0,0,0)');
+
+					$this
+						.on('click', 'a', function(event) {
+
+							var $a = $(this),
+								href = $a.attr('href'),
+								target = $a.attr('target');
+
+							if (!href || href == '#' || href == '' || href == '#' + id)
 								return;
 
+							// Cancelar evento original.
+							
+								event.preventDefault();
+								event.stopPropagation();
+
+							// Esconder painel.
+							
+								$this._hide();
+
+							// Redirecionar para o href.
+							
+								window.setTimeout(function() {
+
+									if (target == '_blank')
+										window.open(href);
+									else
+										window.location.href = href;
+
+								}, config.delay + 10);
+
+						});
+
+				}
+
+			// Evento: Touch.
+			
+				$this.on('touchstart', function(event) {
+
+					$this.touchPosX = event.originalEvent.touches[0].pageX;
+					$this.touchPosY = event.originalEvent.touches[0].pageY;
+
+				})
+
+				$this.on('touchmove', function(event) {
+
+					if ($this.touchPosX === null
+					||	$this.touchPosY === null)
+						return;
+
+					var	diffX = $this.touchPosX - event.originalEvent.touches[0].pageX,
+						diffY = $this.touchPosY - event.originalEvent.touches[0].pageY,
+						th = $this.outerHeight(),
+						ts = ($this.get(0).scrollHeight - $this.scrollTop());
+
+					// Esconder ao deslizar?
+					
+						if (config.hideOnSwipe) {
+
+							var result = false,
+								boundary = 20,
+								delta = 50;
+
+							switch (config.side) {
+
+								case 'left':
+									result = (diffY < boundary && diffY > (-1 * boundary)) && (diffX > delta);
+									break;
+
+								case 'right':
+									result = (diffY < boundary && diffY > (-1 * boundary)) && (diffX < (-1 * delta));
+									break;
+
+								case 'top':
+									result = (diffX < boundary && diffX > (-1 * boundary)) && (diffY > delta);
+									break;
+
+								case 'bottom':
+									result = (diffX < boundary && diffX > (-1 * boundary)) && (diffY < (-1 * delta));
+									break;
+
+								default:
+									break;
+
 							}
 
-						// Calcula as posições.
-						
-							x = Math.max(sh - wh, 0);
-							y = Math.max(0, $window.scrollTop() - x);
+							if (result) {
 
-						// travar/destravar barra lateral.
-						
-							if ($sidebar_inner.data('locked') == 1) {
+								$this.touchPosX = null;
+								$this.touchPosY = null;
+								$this._hide();
 
-								if (y <= 0)
-									$sidebar_inner
-										.data('locked', 0)
-										.css('position', '')
-										.css('top', '');
-								else
-									$sidebar_inner
-										.css('top', -1 * x);
-
-							}
-							else {
-
-								if (y > 0)
-									$sidebar_inner
-										.data('locked', 1)
-										.css('position', 'fixed')
-										.css('top', -1 * x);
+								return false;
 
 							}
 
-					})
-					.on('resize.sidebar-lock', function() {
+						}
 
-						// Calcular alturas.
-						
-							wh = $window.height();
-							sh = $sidebar_inner.outerHeight() + 30;
+					// Evita a rolagem vertical além da parte superior ou inferior.
+					
+						if (($this.scrollTop() < 0 && diffY < 0)
+						|| (ts > (th - 2) && ts < (th + 2) && diffY > 0)) {
 
-						// Trigger scroll.
-						
-							$window.trigger('scroll.sidebar-lock');
+							event.preventDefault();
+							event.stopPropagation();
 
-					})
-					.trigger('resize.sidebar-lock');
+						}
 
 				});
 
-	// Menu.
-	
-		var $menu = $('#menu'),
-			$menu_openers = $menu.children('ul').find('.opener');
+			// Evento: evita que certos eventos dentro do painel borbulhem.
+			
+				$this.on('click touchend touchstart touchmove', function(event) {
+					event.stopPropagation();
+				});
 
-		// Openers.
+			// Evento: oculta o painel se uma tag âncora filha apontando para seu ID for clicada.
+			
+				$this.on('click', 'a[href="#' + id + '"]', function(event) {
+
+					event.preventDefault();
+					event.stopPropagation();
+
+					config.target.removeClass(config.visibleClass);
+
+				});
+
+		// Body.
+
+			// Evento: Ocultar painel no clique / toque do corpo da página.
+			
+				$body.on('click touchend', function(event) {
+					$this._hide(event);
+				});
+
+			// Evento: Toggle.
+			
+				$body.on('click', 'a[href="#' + id + '"]', function(event) {
+
+					event.preventDefault();
+					event.stopPropagation();
+
+					config.target.toggleClass(config.visibleClass);
+
+				});
+
+		// Window.
+
+			// Evento: Esconder ao teclar ESC.
+			
+				if (config.hideOnEscape)
+					$window.on('keydown', function(event) {
+
+						if (event.keyCode == 27)
+							$this._hide(event);
+
+					});
+
+		return $this;
+
+	};
+
+	/ **
+* Aplique "placeholder" do atributo polyfill a um ou mais formulários.
+* @return {jQuery} do objeto jQuery.
+* /
+	 
+	$.fn.placeholder = function() {
+
+		// O navegador oferece suporte nativo a marcadores de posição?
 		
-			$menu_openers.each(function() {
+			if (typeof (document.createElement('input')).placeholder != 'undefined')
+				return $(this);
 
-				var $this = $(this);
+		// sem elementos?
+		
+			if (this.length == 0)
+				return $this;
 
-				$this.on('click', function(event) {
+		// Multiplos elementos?
+		
+			if (this.length > 1) {
 
-					// Prevent default.
-					
-						event.preventDefault();
+				for (var i=0; i < this.length; i++)
+					$(this[i]).placeholder();
 
-					// Toggle.
-					
-						$menu_openers.not($this).removeClass('active');
-						$this.toggleClass('active');
+				return $this;
 
-					// Redimensionamento do Trigger (trava da barra lateral).
-					
-						$window.triggerHandler('resize.sidebar-lock');
+			}
+
+		// Vars.
+		
+			var $this = $(this);
+
+		// Text, TextArea.
+		
+			$this.find('input[type=text],textarea')
+				.each(function() {
+
+					var i = $(this);
+
+					if (i.val() == ''
+					||  i.val() == i.attr('placeholder'))
+						i
+							.addClass('polyfill-placeholder')
+							.val(i.attr('placeholder'));
+
+				})
+				.on('blur', function() {
+
+					var i = $(this);
+
+					if (i.attr('name').match(/-polyfill-field$/))
+						return;
+
+					if (i.val() == '')
+						i
+							.addClass('polyfill-placeholder')
+							.val(i.attr('placeholder'));
+
+				})
+				.on('focus', function() {
+
+					var i = $(this);
+
+					if (i.attr('name').match(/-polyfill-field$/))
+						return;
+
+					if (i.val() == i.attr('placeholder'))
+						i
+							.removeClass('polyfill-placeholder')
+							.val('');
 
 				});
+
+		// Password.
+		
+			$this.find('input[type=password]')
+				.each(function() {
+
+					var i = $(this);
+					var x = $(
+								$('<div>')
+									.append(i.clone())
+									.remove()
+									.html()
+									.replace(/type="password"/i, 'type="text"')
+									.replace(/type=password/i, 'type=text')
+					);
+
+					if (i.attr('id') != '')
+						x.attr('id', i.attr('id') + '-polyfill-field');
+
+					if (i.attr('name') != '')
+						x.attr('name', i.attr('name') + '-polyfill-field');
+
+					x.addClass('polyfill-placeholder')
+						.val(x.attr('placeholder')).insertAfter(i);
+
+					if (i.val() == '')
+						i.hide();
+					else
+						x.hide();
+
+					i
+						.on('blur', function(event) {
+
+							event.preventDefault();
+
+							var x = i.parent().find('input[name=' + i.attr('name') + '-polyfill-field]');
+
+							if (i.val() == '') {
+
+								i.hide();
+								x.show();
+
+							}
+
+						});
+
+					x
+						.on('focus', function(event) {
+
+							event.preventDefault();
+
+							var i = x.parent().find('input[name=' + x.attr('name').replace('-polyfill-field', '') + ']');
+
+							x.hide();
+
+							i
+								.show()
+								.focus();
+
+						})
+						.on('keypress', function(event) {
+
+							event.preventDefault();
+							x.val('');
+
+						});
+
+				});
+
+		// Events.
+		
+			$this
+				.on('submit', function() {
+
+					$this.find('input[type=text],input[type=password],textarea')
+						.each(function(event) {
+
+							var i = $(this);
+
+							if (i.attr('name').match(/-polyfill-field$/))
+								i.attr('name', '');
+
+							if (i.val() == i.attr('placeholder')) {
+
+								i.removeClass('polyfill-placeholder');
+								i.val('');
+
+							}
+
+						});
+
+				})
+				.on('reset', function(event) {
+
+					event.preventDefault();
+
+					$this.find('select')
+						.val($('option:first').val());
+
+					$this.find('input,textarea')
+						.each(function() {
+
+							var i = $(this),
+								x;
+
+							i.removeClass('polyfill-placeholder');
+
+							switch (this.type) {
+
+								case 'submit':
+								case 'reset':
+									break;
+
+								case 'password':
+									i.val(i.attr('defaultValue'));
+
+									x = i.parent().find('input[name=' + i.attr('name') + '-polyfill-field]');
+
+									if (i.val() == '') {
+										i.hide();
+										x.show();
+									}
+									else {
+										i.show();
+										x.hide();
+									}
+
+									break;
+
+								case 'checkbox':
+								case 'radio':
+									i.attr('checked', i.attr('defaultValue'));
+									break;
+
+								case 'text':
+								case 'textarea':
+									i.val(i.attr('defaultValue'));
+
+									if (i.val() == '') {
+										i.addClass('polyfill-placeholder');
+										i.val(i.attr('placeholder'));
+									}
+
+									break;
+
+								default:
+									i.val(i.attr('defaultValue'));
+									break;
+
+							}
+						});
+
+				});
+
+		return $this;
+
+	};
+
+	/ **
+* Move os elementos de/para as primeiras posições de seus respectivos pais.
+* @param {jQuery} $ elements - Elementos (ou seletor) para mover.
+* @param {bool} condição se verdadeira, move os elementos para o topo. Caso contrário, move os elementos de volta para seus locais originais.
+* /
+	 
+	$.prioritize = function($elements, condition) {
+
+		var key = '__prioritize';
+
+		/* Expanda $ elements se ainda não for um objeto jQuery.*/
+		
+			if (typeof $elements != 'jQuery')
+				$elements = $($elements);
+
+		/* Percorra os elementos. */
+		
+			$elements.each(function() {
+
+				var	$e = $(this), $p,
+					$parent = $e.parent();
+
+				// Sem pai? 
+				
+					if ($parent.length == 0)
+						return;
+
+				// Não se moveu? Mova-o.
+				
+					if (!$e.data(key)) {
+
+						// A condição é falsa?
+						
+							if (!condition)
+								return;
+
+				// Obtenha o espaço reservado (que servirá como nosso ponto de referência para quando este elemento precisar voltar).			
+							
+							$p = $e.prev();
+
+				// Não conseguiu encontrar nada? Significa que este elemento já está no topo, então desista.							
+								if ($p.length == 0)
+									return;
+
+				// Mova o elemento para o topo do seu respectivo pai.
+
+							$e.prependTo($parent);
+
+					// Marca o elemento como movido.
+					
+							$e.data(key, $p);
+
+					}
+
+				/* Já moveu? */
+				
+					else {
+
+						/* A condição é verdadeira? */
+						
+							if (condition)
+								return;
+
+						$p = $e.data(key);
+
+						/* Mova o elemento de volta ao seu local original (usando nosso espaço reservado). */
+						
+							$e.insertAfter($p);
+
+						// Desmarque o elemento como movido.
+						
+							$e.removeData(key);
+
+					}
 
 			});
 
-})(jQuery);
+	});
+
+})(jQuery); 
