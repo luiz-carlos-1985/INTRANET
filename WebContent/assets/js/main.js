@@ -5,6 +5,7 @@
 		$body = $('body');
 
 	// Breakpoints.
+	
 		breakpoints({
 			xlarge:   [ '1281px',  '1680px' ],
 			large:    [ '981px',   '1280px' ],
@@ -16,24 +17,26 @@
 			'small-to-xlarge':  '(min-width: 481px) and (max-width: 1680px)'
 		});
 
-	// Stops animations/transitions until the page has ...
+	// Para animações / transições até que a página tenha ... carregado.
 
-		// ... loaded.
 			$window.on('load', function() {
 				window.setTimeout(function() {
 					$body.removeClass('is-preload');
 				}, 100);
 			});
 
-		// ... stopped resizing.
+		// ... parou de redimensionar.
+		
 			var resizeTimeout;
 
 			$window.on('resize', function() {
 
-				// Mark as resizing.
+			// Marcar como redimensionamento.
+			
 					$body.addClass('is-resizing');
 
-				// Unmark after delay.
+				// Desmarcar após atraso.
+				
 					clearTimeout(resizeTimeout);
 
 					resizeTimeout = setTimeout(function() {
@@ -42,9 +45,9 @@
 
 			});
 
-	// Fixes.
+	// Consertos.
+// O objeto se adequa a imagem.
 
-		// Object fit images.
 			if (!browser.canUse('object-fit')
 			||	browser.name == 'safari')
 				$('.image.object').each(function() {
@@ -52,10 +55,12 @@
 					var $this = $(this),
 						$img = $this.children('img');
 
-					// Hide original image.
+					// Esconde imagem original
+					
 						$img.css('opacity', '0');
 
-					// Set background.
+					// Defini o fundo.
+					
 						$this
 							.css('background-image', 'url("' + $img.attr('src') + '")')
 							.css('background-size', $img.css('object-fit') ? $img.css('object-fit') : 'cover')
@@ -63,11 +68,13 @@
 
 				});
 
-	// Sidebar.
+	// Barra lateral.
+	
 		var $sidebar = $('#sidebar'),
 			$sidebar_inner = $sidebar.children('.inner');
 
-		// Inactive by default on <= large.
+		// Inativo por padrão em "<= large".
+		
 			breakpoints.on('<=large', function() {
 				$sidebar.addClass('inactive');
 			});
@@ -76,52 +83,62 @@
 				$sidebar.removeClass('inactive');
 			});
 
-		// Hack: Workaround for Chrome/Android scrollbar position bug.
+		// Solução alternativa para o bug de posição da barra de rolagem do Chrome e do Android.
+		
 			if (browser.os == 'android'
 			&&	browser.name == 'chrome')
 				$('<style>#sidebar .inner::-webkit-scrollbar { display: none; }</style>')
 					.appendTo($head);
 
-		// Toggle.
+		// Toggle. (Alternancia)
+		
 			$('<a href="#sidebar" class="toggle">Toggle</a>')
 				.appendTo($sidebar)
 				.on('click', function(event) {
 
 					// Prevent default.
+					
 						event.preventDefault();
 						event.stopPropagation();
 
 					// Toggle.
+					
 						$sidebar.toggleClass('inactive');
 
 				});
 
-		// Events.
+		// Eventos.
 
-			// Link clicks.
+			// click no link.
 				$sidebar.on('click', 'a', function(event) {
 
-					// >large? Bail.
+					// Grande demais? 
+					
 						if (breakpoints.active('>large'))
 							return;
 
 					// Vars.
+					
 						var $a = $(this),
 							href = $a.attr('href'),
 							target = $a.attr('target');
 
 					// Prevent default.
+					
 						event.preventDefault();
 						event.stopPropagation();
 
-					// Check URL.
+					// Checka a URL.
+					
 						if (!href || href == '#' || href == '')
 							return;
 
-					// Hide sidebar.
+					// Esconde a barra lateral.
+					
 						$sidebar.addClass('inactive');
 
-					// Redirect to href.
+					// Redireciona para o "href".
+					
 						setTimeout(function() {
 
 							if (target == '_blank')
@@ -133,39 +150,46 @@
 
 				});
 
-			// Prevent certain events inside the panel from bubbling.
+			// Evita que certos eventos dentro do painel borbulhem.
+			
 				$sidebar.on('click touchend touchstart touchmove', function(event) {
 
-					// >large? Bail.
+					// Grande demais?
+					
 						if (breakpoints.active('>large'))
 							return;
 
-					// Prevent propagation.
+			// Impede a propagação.
+			
 						event.stopPropagation();
 
 				});
 
-			// Hide panel on body click/tap.
+			// Ocultar painel no corpo ao clickar ou tocar no mesmo.
+			
 				$body.on('click touchend', function(event) {
 
-					// >large? Bail.
+					//Grande Demais?
+					
 						if (breakpoints.active('>large'))
 							return;
 
-					// Deactivate.
+					// Desativar a barra lateral.
+					
 						$sidebar.addClass('inactive');
 
 				});
 
-		// Scroll lock.
-		// Note: If you do anything to change the height of the sidebar's content, be sure to
-		// trigger 'resize.sidebar-lock' on $window so stuff doesn't get out of sync.
+	// Scroll lock.
+// Nota: Se você fizer algo para alterar a altura do conteúdo da barra lateral, certifique-se de
+// "triggar" 'resize.sidebar-lock' em $window para que as coisas não fiquem fora de sincronia.
 
 			$window.on('load.sidebar-lock', function() {
 
 				var sh, wh, st;
 
-				// Reset scroll position to 0 if it's 1.
+				// Redefine a posição de rolagem para 0 se for 1.
+				
 					if ($window.scrollTop() == 1)
 						$window.scrollTop(0);
 
@@ -174,7 +198,8 @@
 
 						var x, y;
 
-						// <=large? Bail.
+						// Grande demais?
+						
 							if (breakpoints.active('<=large')) {
 
 								$sidebar_inner
@@ -186,11 +211,13 @@
 
 							}
 
-						// Calculate positions.
+						// Calcula as posições.
+						
 							x = Math.max(sh - wh, 0);
 							y = Math.max(0, $window.scrollTop() - x);
 
-						// Lock/unlock.
+						// travar/destravar barra lateral.
+						
 							if ($sidebar_inner.data('locked') == 1) {
 
 								if (y <= 0)
@@ -216,11 +243,13 @@
 					})
 					.on('resize.sidebar-lock', function() {
 
-						// Calculate heights.
+						// Calcular alturas.
+						
 							wh = $window.height();
 							sh = $sidebar_inner.outerHeight() + 30;
 
 						// Trigger scroll.
+						
 							$window.trigger('scroll.sidebar-lock');
 
 					})
@@ -229,10 +258,12 @@
 				});
 
 	// Menu.
+	
 		var $menu = $('#menu'),
 			$menu_openers = $menu.children('ul').find('.opener');
 
 		// Openers.
+		
 			$menu_openers.each(function() {
 
 				var $this = $(this);
@@ -240,13 +271,16 @@
 				$this.on('click', function(event) {
 
 					// Prevent default.
+					
 						event.preventDefault();
 
 					// Toggle.
+					
 						$menu_openers.not($this).removeClass('active');
 						$this.toggleClass('active');
 
-					// Trigger resize (sidebar lock).
+					// Redimensionamento do Trigger (trava da barra lateral).
+					
 						$window.triggerHandler('resize.sidebar-lock');
 
 				});
