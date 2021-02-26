@@ -1,7 +1,8 @@
-/// Transforma o : antes do pseudoelemento em um ícone FontAwesome.
+/// Transforma o: antes do pseudoelemento em um ícone FontAwesome.
 /// @param {string} $ content Valor de conteúdo opcional a ser usado.
 /// @param {string} $ category Categoria opcional a ser usada.
 /// @param {string} $ where Pseudoelemento opcional para direcionar (antes ou depois).
+
 @mixin icon($content: false, $category: regular, $where: before) {
 
 	text-decoration: none;
@@ -24,10 +25,11 @@
 		@if ($category == brands) {
 			font-family: 'Font Awesome 5 Brands';
 		}
-		@elseif ($category == solid) {
+		@if ($category == solid) {
 			font-family: 'Font Awesome 5 Free';
 			font-weight: 900;
 		}
+		
 		@else {
 			font-family: 'Font Awesome 5 Free';
 			font-weight: 400;
@@ -42,6 +44,7 @@
 /// @param {mixed} $ lr Preenchimento esquerdo / direito.
 /// @param {list} $ pad Preenchimento extra opcional (na seguinte ordem superior, direita, inferior, esquerda)
 /// @param {bool} $ important Se verdadeiro, adiciona! important.
+
 @mixin padding($tb, $lr, $pad: (0,0,0,0), $important: null) {
 
 	@if $important {
@@ -61,6 +64,7 @@
 /// Codifica um URL de dados SVG para que o IE não bloqueie (via codepen.io/jakob-e/pen/YXXBrp).
 /// @param {string} $ svg URL de dados SVG.
 /// @return {string} URL de dados SVG codificado.
+
 @function svg-url($svg) {
 
 	$svg: str-replace($svg, '"', '\'');
