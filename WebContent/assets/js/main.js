@@ -30,12 +30,12 @@
 		return b.join('');
 
 	};
-
-/**
-* "Painelar" um elemento.
-* @param {object} userConfig - Configuração do usuário.
-* @return {jQuery} - objeto jQuery.
-* /
+	
+/*
+"Painelar" um elemento.
+ @param {object} userConfig - Configuração do usuário.
+ @return {jQuery} - objeto jQuery.
+*/
 	 
 	$.fn.panel = function(userConfig) {
 
@@ -328,10 +328,10 @@
 
 	};
 
-	/ **
-* Aplique "placeholder" do atributo polyfill a um ou mais formulários.
-* @return {jQuery} do objeto jQuery.
-* /
+/*
+ Aplique "placeholder" do atributo polyfill a um ou mais formulários.
+ @return {jQuery} do objeto jQuery.
+*/
 	 
 	$.fn.placeholder = function() {
 
@@ -558,11 +558,11 @@
 
 	};
 
-	/ **
-* Move os elementos de/para as primeiras posições de seus respectivos pais.
-* @param {jQuery} $ elements - Elementos (ou seletor) para mover.
-* @param {bool} condição se verdadeira, move os elementos para o topo. Caso contrário, move os elementos de volta para seus locais originais.
-* /
+	/*
+ Move os elementos de/para as primeiras posições de seus respectivos pais.
+ @param {jQuery} $ elements - Elementos (ou seletor) para mover.
+ @param {bool} condição se verdadeira, move os elementos para o topo. Caso contrário, move os elementos de volta para seus locais originais.
+*/
 	 
 	$.prioritize = function($elements, condition) {
 
@@ -612,29 +612,30 @@
 
 					}
 
-				/* Já moveu? */
+				// Já moveu? 
 				
 					else {
 
-						/* A condição é verdadeira? */
+						// A condição é verdadeira? 
 						
 							if (condition)
 								return;
 
 						$p = $e.data(key);
 
-						/* Mova o elemento de volta ao seu local original (usando nosso espaço reservado). */
+						// Mova o elemento de volta ao seu local original (usando nosso espaço reservado). 
 						
 							$e.insertAfter($p);
 
 						// Desmarque o elemento como movido.
 						
 							$e.removeData(key);
+							
+							}
+		
 
-					}
-
+			
 			});
-
-	});
+	};
 
 })(jQuery); 
