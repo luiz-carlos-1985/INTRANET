@@ -1,8 +1,6 @@
 @import url(fontawesome-all.min.css);
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic|Roboto+Slab:400,700");
-/*
-	WebMaster: Luiz Carlos Jr ; WhatsApp: +55 (98) 99964-9215
-*/
+
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
 pre, a, abbr, acronym, address, big, cite,
@@ -61,6 +59,7 @@ input, select, textarea {
   appearance: none; }
 
 /* Basic */
+
 @-ms-viewport {
   width: device-width; }
 
@@ -90,6 +89,7 @@ body {
     transition: none !important; }
 
 /* Type */
+
 body, input, select, textarea {
   color: rgb(0, 0, 0);
   font-family: "Open Sans", sans-serif;
@@ -113,7 +113,7 @@ a {
   -ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
   transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
    
-   /* TRANSI«√O DAS CORES DOS LINKS DO MENU */
+   /* TRANSI√á√ÉO DAS CORES DOS LINKS DO MENU */
    
   border-bottom: dotted 1px;
   color:rgb(0, 0, 0);
@@ -133,7 +133,6 @@ em, i {
 
 p {
   margin: 0 0 2em 0;
-  
   
    }
 
@@ -236,6 +235,7 @@ hr {
   text-align: right; }
 
 /* Row */
+
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -993,6 +993,7 @@ hr {
             padding-top: 3em; } }
 
 /* Section/Article */
+
 section.special, article.special {
   text-align: center; }
 
@@ -1014,6 +1015,7 @@ header.main > :last-child {
   margin: 0 0 1em 0; }
 
 /* Form */
+
 form {
   margin: 0 0 2em 0; }
 
@@ -1178,6 +1180,7 @@ input[type="radio"] + label:before {
   opacity: 1.0; }
 
 /* Box */
+
 .box {
   border-radius: 0.375em;
   border: solid 1px rgba(210, 215, 217, 0.75);
@@ -1193,6 +1196,7 @@ input[type="radio"] + label:before {
     padding: 0; }
 
 /* Icon */
+
 .icon {
   text-decoration: none;
   border-bottom: none;
@@ -1218,6 +1222,7 @@ input[type="radio"] + label:before {
     font-family: 'Font Awesome 5 Brands'; }
 
 /* Image */
+
 .image {
   border-radius: 0.375em;
   border: 0;
@@ -1265,6 +1270,7 @@ a.image {
     transform: scale(1.075); }
 
 /* List */
+
 ol {
   list-style: decimal;
   margin: 0 0 2em 0;
@@ -1298,6 +1304,7 @@ dl {
     margin-left: 2em; }
 
 /* Actions */
+
 ul.actions {
   display: -moz-flex;
   display: -webkit-flex;
@@ -1347,6 +1354,7 @@ ul.actions {
       width: 100%; }
 
 /* Icons */
+
 ul.icons {
   cursor: default;
   list-style: none;
@@ -1403,6 +1411,7 @@ ul.contact {
       color: inherit; }
 
 /* Pagination */
+
 ul.pagination {
   cursor: default;
   list-style: none;
@@ -1445,6 +1454,7 @@ ul.pagination {
       padding-right: 0; } }
 
 /* Table */
+
 .table-wrapper {
   -webkit-overflow-scrolling: touch;
   overflow-x: auto; }
@@ -1488,6 +1498,7 @@ table {
       border-top: 0; }
 
 /* Button */
+
 input[type="submit"],
 input[type="reset"],
 input[type="button"],
@@ -1590,6 +1601,7 @@ button,
     opacity: 0.25; }
 
 /* Mini Posts */
+
 .mini-posts article {
   border-top: solid 1px rgba(210, 215, 217, 0.75);
   margin-top: 2em;
@@ -1606,6 +1618,7 @@ button,
     padding-top: 0; }
 
 /* Features */
+
 .features {
   display: -moz-flex;
   display: -webkit-flex;
@@ -1650,13 +1663,17 @@ button,
       margin: 0 2em 0 0;
       text-align: center;
       width: 10em; } 
+
       /* ICONES */
+
       .features article .icon:before {
         color: rgb(0, 0, 0);
         font-size: 2.75rem;
         position: relative;
         top: 0.05em; }
+
         /* BORDA DOS ICONES*/
+
       .features article .icon:after {
         -moz-transform: rotate(45deg);
         -webkit-transform: rotate(45deg);
@@ -1735,6 +1752,7 @@ button,
       font-size: 1.25rem; } }
 
 /* Posts */
+
 .posts {
   display: -moz-flex;
   display: -webkit-flex;
@@ -1843,6 +1861,7 @@ button,
             display: none; } }
 
 /* Wrapper */
+
 #wrapper {
   display: -moz-flex;
   display: -webkit-flex;
@@ -1855,6 +1874,7 @@ button,
   min-height: 100vh; }
 
 /* Main */
+
 #main {
   -moz-flex-grow: 1;
   -webkit-flex-grow: 1;
@@ -1891,6 +1911,7 @@ button,
         padding: 3em 0 1em 0 ; } }
 
 /* Sidebar */
+
 #search form {
   text-decoration: none;
   position: relative; }
@@ -2081,6 +2102,7 @@ button,
         width: 5em; } }
 
 /* Header */
+
 #header {
   display: -moz-flex;
   display: -webkit-flex;
@@ -2119,6 +2141,7 @@ button,
         top: 0; } }
 
 /* Banner */
+
 #banner {
   padding: 6em 0 4em 0 ;
   display: -moz-flex;
@@ -2197,6 +2220,7 @@ button,
       max-height: 35vh; } }
 
 /* Footer */
+
 #footer .copyright {
   color: rgb(250, 234, 37);
   font-size: 0.9em; }
@@ -2204,6 +2228,7 @@ button,
     color: inherit; }
 
 /* Menu */
+
 #menu ul {
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -2282,9 +2307,7 @@ button,
     border-top: 0;
     margin-top: 0;
     padding-top: 0; }
-   
   
-    
  
 table { margin: 0 auto; }
 
@@ -2302,7 +2325,9 @@ p {
   margin-top: 0 }
   
   .container ul {
-  /* for IE below version 7 use `width` instead of `max-width` */
+	  
+  / * para IE abaixo da vers√£o 7 use `width` em vez de` max-width` * /
+	  
   max-width: 800px;
   margin-right: auto;
   margin-left: auto;
