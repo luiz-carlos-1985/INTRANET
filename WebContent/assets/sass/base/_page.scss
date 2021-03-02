@@ -1,14 +1,17 @@
 	// MSIE: Requerido para o IEMobile.
+
 		@-ms-viewport {
 			width: device-width;
 		}
 
 	// MSIE: Previne a barra de rolagem de se sobrepor ao conteúdo. 
+
 		body {
 			-ms-overflow-style: scrollbar;
 		}
 
 	// Assegura que a largura da página ficará sempre em 320 pixels.
+
 		@include breakpoint('<=xsmall') {
 			html, body {
 				min-width: 320px;
@@ -17,6 +20,7 @@
 
 	// Seta o modelo da caixa para border-box.
 	// Baseado no documento: css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
+
 		html {
 			box-sizing: border-box;
 		}
@@ -29,6 +33,7 @@
 		background: _palette(bg);
 
 		// Para as animações iniciais até que a página carregue ou pare de mudar de tamanho.
+		
 			&.is-preload,
 			&.is-resizing {
 				*, *:before, *:after {
