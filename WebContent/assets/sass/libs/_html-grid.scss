@@ -1,15 +1,17 @@
-
 	/// Inicializa o elemento corrente como um HTML grid.
 	/// @param {mixed} $ gutters Gutters (um único número para definir os Gutters de coluna / linha ou uma lista para defini-las individualmente).
-        /// @param {mixed} $ sufixo Sufixo da classe da coluna (opcional; um único sufixo ou uma lista).
+	/// @param {mixed} $ sufixo Sufixo da classe da coluna (opcional; um único sufixo ou uma lista).
+	
 	@mixin html-grid($gutters: 1.5em, $suffix: '') {
 
 		// Inicializar.
+		
 			$cols: 12;
 			$multipliers: 0, 0.25, 0.5, 1, 1.50, 2.00;
 			$unit: 100% / $cols;
 
 			// Sufixos.
+			
 				$suffixes: null;
 
 				@if (type-of($suffix) == 'list') {
@@ -20,6 +22,7 @@
 				}
 
 			// Gutters.
+			
 				$guttersCols: null;
 				$guttersRows: null;
 
@@ -37,17 +40,20 @@
 				}
 
 		// Linhas.
+		
 			display: flex;
 			flex-wrap: wrap;
 			box-sizing: border-box;
 			align-items: stretch;
 
 			// Colunas.
+			
 				> * {
 					box-sizing: border-box;
 				}
 
 			// Gutters.
+			
 				&.gtr-uniform {
 					> * {
 						> :last-child {
@@ -57,6 +63,7 @@
 				}
 
 			// Alinhamento.
+			
 				&.aln-left {
 					justify-content: flex-start;
 				}
@@ -82,9 +89,11 @@
 				}
 
 		// Passo através dos sufixos.
+		
 			@each $suffix in $suffixes {
 
 				// Sufixo.
+				
 					@if ($suffix != '') {
 						$suffix: '-' + $suffix;
 					}
@@ -100,6 +109,7 @@
 						}
 
 					// Colunas, fora de alinhamento.
+					
 						@for $i from 1 through $cols {
 							> .col-#{$i}#{$suffix} {
 								width: $unit * $i;
@@ -111,9 +121,11 @@
 						}
 
 					// Passo através dos multiplicadores .
+					
 						@each $multiplier in $multipliers {
 
 							// Gutters.
+							
 								$class: null;
 
 								@if ($multiplier != 1) {
@@ -129,6 +141,7 @@
 									}
 
 									// Uniform.
+									
 										&.gtr-uniform {
 											margin-top: $guttersCols * $multiplier * -1;
 
