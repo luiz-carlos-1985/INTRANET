@@ -247,7 +247,6 @@
 	);
 
 // Funções.
-
 /// Remove um item específico de uma lista.
 /// @param {list} Lista $ list.
 /// @param {integer} Índice $ index.
@@ -319,7 +318,7 @@
 
 	}
 
-// Mixins.
+/// Mixins.
 /// Envolve @content em blocos do key-frame vendidos por fornecedores.
 /// @param {string} $ name Nome.
 
