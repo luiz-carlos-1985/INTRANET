@@ -1,4 +1,3 @@
-
 	/// Prefixos do vendor .
 	/// @var {list}
 	
@@ -68,7 +67,7 @@
 		// Font kerning.
 			'font-kerning',
 
-		// Fragmented borders and backgrounds.
+		// Bordas fragmentadas e plano de fundo.
 			'box-decoration-break',
 
 		// Grid layout.
@@ -103,7 +102,7 @@
 			'mask-repeat',
 			'mask-size',
 
-		// Multicolumn.
+		// Multicolunas.
 			'break-after',
 			'break-before',
 			'break-inside',
@@ -167,7 +166,7 @@
 			'transform',
 			'transform-origin',
 
-		// Transform 3D.
+		// Transforma em 3D.
 			'backface-visibility',
 			'perspective',
 			'perspective-origin',
@@ -200,7 +199,7 @@
 		// Cross fade.
 			'cross-fade',
 
-		// Element function.
+		// Função element.
 			'element',
 
 		// Filter function.
@@ -210,7 +209,7 @@
 			'flex',
 			'inline-flex',
 
-		// Grab cursors.
+		// Grab cursores.
 			'grab',
 			'grabbing',
 
@@ -227,7 +226,7 @@
 		// Image set.
 			'image-set',
 
-		// Intrinsic width.
+		//Largura intrinsica
 			'max-content',
 			'min-content',
 			'fit-content',
@@ -235,13 +234,13 @@
 			'fill-available',
 			'stretch',
 
-		// Sticky position.
+		// Posição do sticky.
 			'sticky',
 
 		// Transform.
 			'transform',
 
-		// Zoom cursors.
+		// Zoom dos cursores.
 			'zoom-in',
 			'zoom-out',
 
@@ -321,7 +320,6 @@
 	}
 
 // Mixins.
-
 /// Envolve @content em blocos do key-frame vendidos por fornecedores.
 /// @param {string} $ name Nome.
 
