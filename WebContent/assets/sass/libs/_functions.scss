@@ -2,6 +2,7 @@
 /// @param {list} $list List.
 /// @param {integer} $index Index.
 /// @return {list} Updated list.
+
 @function remove-nth($list, $index) {
 
 	$result: null;
@@ -38,6 +39,7 @@
 /// @param {map} $map Map.
 /// @param {string} $keys Key(s).
 /// @return {string} Value.
+
 @function val($map, $keys...) {
 
 	@if nth($keys, 1) == null {
@@ -55,6 +57,7 @@
 /// Pega um valor de duração
 /// @param {string} $keys Key(s).
 /// @return {string} Value.
+
 @function _duration($keys...) {
 	@return val($duration, $keys...);
 }
@@ -62,6 +65,7 @@
 /// Pega um valor da fonte.
 /// @param {string} $keys Key(s).
 /// @return {string} Value.
+
 @function _font($keys...) {
 	@return val($font, $keys...);
 }
@@ -69,6 +73,7 @@
 /// Pega um valor misc .
 /// @param {string} $keys Key(s).
 /// @return {string} Value.
+
 @function _misc($keys...) {
 	@return val($misc, $keys...);
 }
@@ -76,6 +81,7 @@
 /// Pega um valor da paleta.
 /// @param {string} $keys Key(s).
 /// @return {string} Value.
+
 @function _palette($keys...) {
 	@return val($palette, $keys...);
 }
@@ -83,6 +89,7 @@
 /// Pega um valor de tamanho.
 /// @param {string} $keys Key(s).
 /// @return {string} Value.
+
 @function _size($keys...) {
 	@return val($size, $keys...);
 }
